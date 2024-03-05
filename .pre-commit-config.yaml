@@ -16,3 +16,8 @@ repos:
     -   id: detect-secrets
         args: ['--baseline', '.secrets.baseline']
         exclude: package.lock.json
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.29.0
+    hooks:
+      - id: yamllint
+        args: [--strict]
