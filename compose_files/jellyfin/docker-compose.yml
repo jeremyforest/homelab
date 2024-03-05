@@ -1,21 +1,21 @@
 ---
-version: "2.1"
+version: '2.1'
 services:
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest
-    container_name: jellyfin
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - UMAP=02
-      - TZ=America/New_York
-    volumes:
-      - /home/jeremy/appdata/jellyfin:/config
-      - /mnt/video/series:/data/tvshows
-      - /mnt/video/movies:/data/movies
-    ports:
-      - 8096:8096
-      - 8920:8920 #optional
-      - 7359:7359/udp #optional
-      - 1900:1900/udp #optional
-    restart: unless-stopped
+    jellyfin:
+        image: lscr.io/linuxserver/jellyfin:latest
+        container_name: jellyfin
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - UMAP=02
+            - TZ=America/New_York
+        volumes:
+            - /home/jeremy/appdata/jellyfin:/config
+            - /mnt/video/series:/data/tvshows
+            - /mnt/video/movies:/data/movies
+        ports:
+            - 8096:8096
+            - 8920:8920       # optional
+            - 7359:7359/udp   # optional
+            - 1900:1900/udp   # optional
+        restart: unless-stopped

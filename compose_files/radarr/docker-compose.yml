@@ -1,18 +1,18 @@
 ---
-version: "2.1"
+version: '2.1'
 services:
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - UMAP=02
-      - TZ=America/New_York
-    volumes:
-      - /home/jeremy/appdata/radarr:/config
-      - /mnt/video/movies:/movies
-      - /mnt/video/downloads:/downloads
-    ports:
-      - 7878:7878
-    restart: unless-stopped
+    radarr:
+        image: lscr.io/linuxserver/radarr:latest
+        container_name: radarr
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - UMAP=02
+            - TZ=America/New_York
+        volumes:
+            - /home/jeremy/appdata/radarr:/config
+            - /mnt/video/movies:/movies
+            - /mnt/video/downloads:/downloads
+        ports:
+            - 7878:7878
+        restart: unless-stopped

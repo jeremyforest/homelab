@@ -1,27 +1,32 @@
+---
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
-    hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-    -   id: check-added-large-files
--   repo: https://github.com/iamthefij/docker-pre-commit
-    rev: v3.0.1
-    hooks:
-    -   id: docker-compose-check
--   repo: https://github.com/Yelp/detect-secrets
-    rev: v1.4.0
-    hooks:
-    -   id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
-        exclude: package.lock.json
--   repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.29.0
-    hooks:
-    - id: yamllint
--   repo: https://github.com/ansible/ansible-lint.git
-    rev: v4.2.0
-    hooks:
-    -   id: ansible-lint
-        files: \.(yaml|yml)$
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.5.0
+      hooks:
+          - id: trailing-whitespace
+          - id: end-of-file-fixer
+          - id: check-added-large-files
+    - repo: https://github.com/iamthefij/docker-pre-commit
+      rev: v3.0.1
+      hooks:
+          - id: docker-compose-check
+            exclude: ^compose_files/immich-app/
+    - repo: https://github.com/Yelp/detect-secrets
+      rev: v1.4.0
+      hooks:
+          - id: detect-secrets
+            args: [--baseline, .secrets.baseline]
+            exclude: package.lock.json
+    - repo: https://github.com/adrienverge/yamllint.git
+      rev: v1.35.1
+      hooks:
+          - id: yamllint
+            args: ['-d {extends: relaxed, rules: {line-length: disable}}', '-s']
+    # - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+    #   rev: 0.2.1 # or other specific tag
+    #   hooks:
+    #       - id: yamlfmt
+    - repo: https://github.com/ansible/ansible-lint.git
+      rev: v24.2.0
+      hooks:
+          - id: ansible-lint

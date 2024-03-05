@@ -1,18 +1,18 @@
 ---
-version: "2.1"
+version: '2.1'
 services:
-  lidarr:
-    image: lscr.io/linuxserver/lidarr:latest
-    container_name: lidarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - UMAP=02
-      - TZ=America/New_York
-    volumes:
-      - /home/jeremy/appdata/lidarr:/config
-      - /mnt/music:/music
-      - /mnt/music/downloads:/downloads
-    ports:
-      - 8686:8686
-    restart: unless-stopped
+    lidarr:
+        image: lscr.io/linuxserver/lidarr:latest
+        container_name: lidarr
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - UMAP=02
+            - TZ=America/New_York
+        volumes:
+            - /home/jeremy/appdata/lidarr:/config
+            - /mnt/music:/music
+            - /mnt/music/downloads:/downloads
+        ports:
+            - 8686:8686
+        restart: unless-stopped

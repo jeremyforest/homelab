@@ -1,27 +1,28 @@
-version: "3.1"
+---
+version: '3.1'
 services:
-  mealie:
-    container_name: mealie
-    image: hkotel/mealie:latest
-    restart: unless-stopped
-    ports:
-      - 9925:80
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: America/New_York
+    mealie:
+        container_name: mealie
+        image: hkotel/mealie:latest
+        restart: unless-stopped
+        ports:
+            - 9925:80
+        environment:
+            PUID: 1000
+            PGID: 1000
+            TZ: America/New_York
 
       # Default Recipe Settings
-      RECIPE_PUBLIC: 'true'
-      RECIPE_SHOW_NUTRITION: 'true'
-      RECIPE_SHOW_ASSETS: 'true'
-      RECIPE_LANDSCAPE_VIEW: 'true'
-      RECIPE_DISABLE_COMMENTS: 'false'
-      RECIPE_DISABLE_AMOUNT: 'false'
+            RECIPE_PUBLIC: 'true'
+            RECIPE_SHOW_NUTRITION: 'true'
+            RECIPE_SHOW_ASSETS: 'true'
+            RECIPE_LANDSCAPE_VIEW: 'true'
+            RECIPE_DISABLE_COMMENTS: 'false'
+            RECIPE_DISABLE_AMOUNT: 'false'
 
       # Gunicorn
       # WEB_CONCURRENCY: 2
       # WORKERS_PER_CORE: 0.5
       # MAX_WORKERS: 8
-    volumes:
-      - /home/jeremy/appdata/mealie:/app/data
+        volumes:
+            - /home/jeremy/appdata/mealie:/app/data
