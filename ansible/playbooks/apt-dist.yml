@@ -1,0 +1,9 @@
+# modified from https://github.com/techno-tim/launchpad/blob/master/ansible/playbooks/apt.yml
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: apt-dist
+      apt:
+        update_cache: yes
+        upgrade: 'dist'

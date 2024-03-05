@@ -1,7 +1,9 @@
-- hosts: "*"
+# from https://github.com/techno-tim/launchpad/blob/master/ansible/playbooks/apt.yml
+
+- hosts: all
   become: yes
   tasks:
     - name: apt
       apt:
         update_cache: yes
-        upgrade: 'yes'
+        upgrade: yes
