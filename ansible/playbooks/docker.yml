@@ -1,5 +1,5 @@
 ---
-- name: Install Docker engine
+- name: Install Docker engine and Docker Compose
   hosts: all
   become: true
   tasks:
@@ -15,8 +15,8 @@
         become: true
 
       - name: Add GPG key
-        ansible.builtin.apt_repository:
-            repo: https://download.docker.com/linux/ubuntu/gpg
+        ansible.builtin.apt_key:
+            url: https://download.docker.com/linux/ubuntu/gpg
             state: present
 
       - name: Add docker repository to apt
@@ -39,3 +39,11 @@
         ansible.builtin.command: docker info
         become: true
         changed_when: false
+
+      - name: Install docker-compose
+        ansible.builtin.apt:
+            name:
+                - docker-compose
+            state: present
+            update_cache: true
+        become: true
