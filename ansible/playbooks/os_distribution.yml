@@ -1,0 +1,11 @@
+---
+- name: Ask all the host what their os distro is
+  hosts: all
+  tasks:
+
+    - name: Classify hosts depending on their OS distribution
+      ansible.builtin.group_by:
+        key: os_{{ ansible_facts['distribution'] }}
+    - name: Print distribution
+      ansible.builtin.debug:
+        msg: os_{{ ansible_facts['distribution'] }}
