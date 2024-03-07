@@ -1,0 +1,17 @@
+---
+- name: Create required dirs and update their permission
+  hosts: all
+  vars_files:
+    - ../vars/vars.yml
+  tasks:
+    - name: Create docker_dir directory with the right permissions
+      ansible.builtin.file:
+        path: "{{ item }}"
+        recurse: true
+        state: directory
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: "0755"
+      loop:
+        - "{{ docker_dir }}"
+        - "{{ data_dir }}"

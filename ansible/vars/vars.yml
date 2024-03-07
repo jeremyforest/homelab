@@ -1,0 +1,5 @@
+---
+username: jeremy
+
+docker_dir: /home/{{ username }}/docker
+data_dir: /home/{{ username }}/appdata

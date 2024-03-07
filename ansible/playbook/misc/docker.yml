@@ -1,0 +1,69 @@
+---
+- name: Install Docker engine and Docker Compose
+  hosts: all
+  vars_files:
+    - ../vars/vars.yml
+  tasks:
+    - name: Install dependencies
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: true
+      become: true
+
+    - name: Add GPG key
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      become: true
+
+    - name: Add docker repository to apt
+      ansible.builtin.apt_repository:
+        filename: docker
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+
+    - name: Install docker engine
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: true
+      become: true
+
+    - name: Test docker
+      ansible.builtin.command: docker info
+      become: true
+      changed_when: false
+
+    - name: Install docker-compose
+      ansible.builtin.apt:
+        name:
+          - docker-compose
+        state: present
+        update_cache: true
+      become: true
+
+    - name: Ensure Docker group exists
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Add user to Docker group
+      ansible.builtin.user:
+        name: "{{ username }}"
+        groups: docker
+        append: true
+      become: true
+
+    - name: Enable Docker service
+      ansible.builtin.service:
+        name: docker
+        enabled: true
+        state: started
