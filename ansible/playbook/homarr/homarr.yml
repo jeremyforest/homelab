@@ -1,0 +1,28 @@
+---
+- name: Create homaar container
+  hosts: all
+  vars_files:
+    - ../../vars/vars.yml
+  tasks:
+
+    - name: Copy homarr configuration
+      ansible.builtin.copy:
+        src: default.json
+        dest: "{{ docker_dir }}/homarr/configs/"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        mode: "0755"
+      become: true
+
+    - name: Create homarr docker container
+      community.docker.docker_container:
+        name: homarr
+        image: ghcr.io/ajnart/homarr:latest
+        restart_policy: unless-stopped
+        volumes:
+          - "{{ docker_dir }}/homarr/configs:/app/data/configs"
+          - "{{ docker_dir }}/homarr/icons:/app/public/icons"
+          - "/var/run/docker.sock:/var/run/docker.sock"
+        ports:
+          - 7575:7575
+        state: started
