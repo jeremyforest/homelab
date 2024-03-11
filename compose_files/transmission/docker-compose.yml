@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+    transmission-openvpn:
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - /mnt/video/downloads:/data/completed
+            - /home/jeremy/appdata/transmission:/config
+            - /home/jeremy/appdata/transmission/openvpn-config:/etc/openvpn/custom/
+        environment:
+            - OPENVPN_PROVIDER=custom
+            - OPENVPN_CONFIG=${OPENVPN_CONFIG}
+            - LOCAL_NETWORK=192.168.0.0/16
+            - PUID=1000
+            - PGID=1000
+            - UMASK=002
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+        ports:
+            - '9091:9091'
+        image: haugene/transmission-openvpn
+        restart: always
