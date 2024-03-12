@@ -4,7 +4,7 @@ services:
         cap_add:
             - NET_ADMIN
         volumes:
-            - /mnt/video/downloads:/data/completed
+            - /mnt/video/downloads:/downloads
             - /home/jeremy/appdata/transmission:/config
             - /home/jeremy/appdata/transmission/openvpn-config:/etc/openvpn/custom/
         environment:
@@ -14,11 +14,12 @@ services:
             - PUID=1000
             - PGID=1000
             - UMASK=002
+            - DOWNLOAD_DIR=/downloads
         logging:
             driver: json-file
             options:
                 max-size: 10m
         ports:
-            - '9091:9091'
+            - 9091:9091
         image: haugene/transmission-openvpn
         restart: always
