@@ -1,27 +1,55 @@
-version: "3.1"
+---
+version: "3.7"
 services:
   mealie:
+    image: ghcr.io/mealie-recipes/mealie:v1.3.2 #
+
+
     container_name: mealie
-    image: hkotel/mealie:v0.5.0
-    restart: unless-stopped
     ports:
-      - 9925:80
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: America/New_York
+        - "9925:9000" #
 
-      # Default Recipe Settings
-      RECIPE_PUBLIC: 'true'
-      RECIPE_SHOW_NUTRITION: 'true'
-      RECIPE_SHOW_ASSETS: 'true'
-      RECIPE_LANDSCAPE_VIEW: 'true'
-      RECIPE_DISABLE_COMMENTS: 'false'
-      RECIPE_DISABLE_AMOUNT: 'false'
 
-      # Gunicorn
-      # WEB_CONCURRENCY: 2
-      # WORKERS_PER_CORE: 0.5
-      # MAX_WORKERS: 8
+    deploy:
+      resources:
+        limits:
+          memory: 1000M #
+
+
+    depends_on:
+      - postgres
     volumes:
-      - /home/jeremy/appdata/mealie:/app/data
+      - /home/jeremy/appdata/mealie/mealie-data:/app/data/
+    environment:
+    # Set Backend ENV Variables Here
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=3
+      - BASE_URL=http://192.168.1.103:9925
+
+    # Database Settings
+      - DB_ENGINE=postgres
+      - POSTGRES_USER=mealie
+      - POSTGRES_PASSWORD=mealie
+      - POSTGRES_SERVER=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=mealie
+    restart: always
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    restart: always
+    volumes:
+      - mealie-pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+
+volumes:
+  mealie-data:
+    driver: local
+  mealie-pgdata:
+    driver: local
