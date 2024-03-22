@@ -1,0 +1,33 @@
+---
+version: "3.4"
+
+services:
+  app:
+    image: ghcr.io/hargata/lubelogger:latest
+    build: .
+    restart: unless-stopped
+    # volumes used to keep data persistent
+    volumes:
+      - /home/jeremy/appdata/lubelog/config:/App/config
+      - /home/jeremy/appdata/lubelog/data:/App/data
+      - /home/jeremy/appdata/lubelog/translations:/App/wwwroot/translations
+      - /home/jeremy/appdata/lubelog/documents:/App/wwwroot/documents
+      - /home/jeremy/appdata/lubelog/images:/App/wwwroot/images
+      - /home/jeremy/appdata/lubelog/temp:/App/wwwroot/temp
+      - /home/jeremy/appdata/lubelog/log:/App/log
+      - /home/jeremy/appdata/lubelog/keys:/root/.aspnet/DataProtection-Keys
+    # expose port and/or use serving via traefik
+    ports:
+      - 8097:8080
+    env_file:
+      - .env
+
+volumes:
+  config:
+  data:
+  translations:
+  documents:
+  images:
+  temp:
+  log:
+  keys:
