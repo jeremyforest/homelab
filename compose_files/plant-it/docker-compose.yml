@@ -1,9 +1,9 @@
 version: "3"
 name: plant-it
 services:
-  backend:
-    image: msdeluise/plant-it-backend:latest
-    env_file: backend.env
+  server:
+    image: msdeluise/plant-it-server:latest
+    env_file: server.env
     depends_on:
       - db
       - cache
@@ -12,32 +12,16 @@ services:
       - "/home/jeremy/appdata/plant-it/upload-dir:/upload-dir"
       - "/home/jeremy/appdata/plant-it/certs:/certificates"
     ports:
-      - "8089:8080"
+      - "8095:8080"
+      - "4040:3000"
 
   db:
     image: mysql:8.0
     restart: always
-    env_file: backend.env
+    env_file: server.env
     volumes:
       - "/home/jeremy/appdata/plant-it/db:/var/lib/mysql"
 
   cache:
     image: redis:7.2.1
     restart: always
-
-  frontend:
-    image: msdeluise/plant-it-frontend:latest
-    env_file: frontend.env
-    links:
-      - backend
-    ports:
-      - "4040:3000"
-    volumes:
-      - "/home/jeremy/appdata/plant-it/certs:/certificates"
-volumes:
-  certs:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./certificates
