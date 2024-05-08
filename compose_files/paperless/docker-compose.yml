@@ -10,7 +10,7 @@ services:
     volumes:
       - /home/jeremy/appdata/paperless/db:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: paperless
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
