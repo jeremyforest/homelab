@@ -1,18 +1,22 @@
 version: "3.4"
 services:
   broker:
-    image: redis:6.0
-    restart: unless-stopped
-
-  db:
-    image: postgres:13
+    image: docker.io/library/redis:7
     restart: unless-stopped
     volumes:
-      - /home/jeremy/appdata/paperless/db:/var/lib/postgresql/data
+      - redisdata:/data
+
+  db:
+    image: docker.io/library/postgres:16
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: paperless
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      USERMAP_UID: "1000"
+      USERMAP_GID: "1000"
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -20,24 +24,24 @@ services:
     depends_on:
       - db
       - broker
+        #- tika
+        #- gotenberg
     ports:
-      - 8000:8000
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.1.152:8000"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      - 8010:8000
     volumes:
-      - /home/jeremy/appdata/paperless/data:/usr/src/paperless/data
-      - /home/jeremy/appdata/paperless/media:/usr/src/paperless/media
-      - /home/jeremy/appdata/paperless/export:/usr/src/paperless/export
-      - /home/jeremy/appdata/paperless/consume:/usr/src/paperless/consume
-    env_file: docker-compose.env
+      - /mnt/commun/paperless/data:/usr/src/paperless/data
+      - /mnt/commun/paperless/media:/usr/src/paperless/media
+      - /mnt/commun/paperless/export:/usr/src/paperless/export
+      - /mnt/commun/paperless/consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
+      USERMAP_UID: "1000"
+      USERMAP_GID: "1000"
+      PAPERLESS_CONSUMER_RECURSIVE: "true"
 
 volumes:
   data:
   media:
   pgdata:
+  redisdata:
