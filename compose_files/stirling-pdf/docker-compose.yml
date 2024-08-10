@@ -11,3 +11,4 @@ services:
       - /home/jeremy/appdata/stirling-pdf/logs:/logs/
     environment:
       - DOCKER_ENABLE_SECURITY=false
+    restart: unless-stopped
