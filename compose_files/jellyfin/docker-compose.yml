@@ -11,8 +11,8 @@ services:
       - TZ=America/New_York
     volumes:
       - /home/jeremy/appdata/jellyfin:/config
-      - /mnt/video/series:/data/tvshows
-      - /mnt/video/movies:/data/movies
+      - /mnt/video/data/media/tv:/data/tvshows
+      - /mnt/video/data/media/movies:/data/movies
     ports:
       - 8096:8096
       - 8920:8920 #optional
