@@ -2,7 +2,7 @@
 version: "2.1"
 services:
   sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
+    image: ghcr.io/hotio/sonarr:latest
     container_name: sonarr
     environment:
       - PUID=1000
@@ -11,8 +11,8 @@ services:
       - TZ=America/New_York
     volumes:
       - /home/jeremy/appdata/sonarr:/config
-      - /mnt/video/series:/tv
-      - /mnt/video/downloads:/downloads
+      - /mnt/video/data/media/tv:/tv
+      - /mnt/video/data/torrents:/data
     ports:
       - 8989:8989
     restart: unless-stopped
