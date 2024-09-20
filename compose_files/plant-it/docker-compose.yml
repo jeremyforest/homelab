@@ -12,8 +12,8 @@ services:
       - "/home/jeremy/appdata/plant-it/upload-dir:/upload-dir"
       - "/home/jeremy/appdata/plant-it/certs:/certificates"
     ports:
-      - "8095:8080"
-      - "4040:3000"
+      - "8080:8080"
+      - "3000:3000"
 
   db:
     image: mysql:8.0
