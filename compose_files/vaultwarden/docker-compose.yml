@@ -4,7 +4,7 @@ services:
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: vaultwarden
-    restart: unless-stopped
+    restart: always
     volumes:
       - /home/jeremy/appdata/vaultwarden/data:/data
     environment:
@@ -16,7 +16,7 @@ services:
   caddy:
     image: caddy:2
     container_name: caddy
-    restart: unless-stopped
+    restart: always
     ports:
       - 80:80  # Needed for the ACME HTTP-01 challenge.
       - 443:443
