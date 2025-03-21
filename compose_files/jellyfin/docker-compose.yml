@@ -1,21 +1,29 @@
 ---
-version: "2.1"
+
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
+      # device:
+      #   - /dev/dri:/dev/dri
     environment:
       - PUID=1000
       - PGID=1000
       - UMAP=02
-      - TZ=America/New_York
+      - TZ=Europe/Paris
     volumes:
       - /home/jeremy/appdata/jellyfin:/config
       - /mnt/video/data/media/tv:/data/tvshows
       - /mnt/video/data/media/movies:/data/movies
+      - /mnt/video/data/media/youtube:/data/youtube
+      - /mnt/video/data/media/family:/data/family
     ports:
       - 8096:8096
-      - 8920:8920 #optional
-      - 7359:7359/udp #optional
-      - 1900:1900/udp #optional
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1024M
+    mem_limit: 1024M
+    cpus: 2
